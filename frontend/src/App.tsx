@@ -1,6 +1,5 @@
-import { createRootRoute, createRoute, createRouter, RouterProvider, Outlet, useNavigate } from '@tanstack/react-router';
+import { createRootRoute, createRoute, createRouter, RouterProvider, Outlet } from '@tanstack/react-router';
 import { useInternetIdentity } from './hooks/useInternetIdentity';
-import { useQueryClient } from '@tanstack/react-query';
 import Layout from './components/Layout';
 import FriendsListPage from './pages/FriendsListPage';
 import FriendsManagementPage from './pages/FriendsManagementPage';
@@ -12,16 +11,21 @@ import { useGetCallerUserProfile } from './hooks/useQueries';
 import { Toaster } from '@/components/ui/sonner';
 
 function AuthGuard({ children }: { children: React.ReactNode }) {
-  const { identity, isInitializing } = useInternetIdentity();
+  const { identity, isInitializing, isLoggingIn } = useInternetIdentity();
   const isAuthenticated = !!identity;
+
+  // Use the custom hook that properly handles actor dependency state
   const { data: userProfile, isLoading: profileLoading, isFetched } = useGetCallerUserProfile();
 
-  if (isInitializing) {
+  // Show loading spinner while auth is initializing or login is in progress
+  if (isInitializing || isLoggingIn) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 rounded-full border-2 border-teal border-t-transparent animate-spin" />
-          <p className="text-muted-foreground text-sm">Loading...</p>
+          <p className="text-muted-foreground text-sm">
+            {isLoggingIn ? 'Logging in...' : 'Loading...'}
+          </p>
         </div>
       </div>
     );
@@ -31,6 +35,7 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
     return <AccessDeniedScreen />;
   }
 
+  // Only show profile setup when we're sure the profile doesn't exist
   const showProfileSetup = isAuthenticated && !profileLoading && isFetched && userProfile === null;
 
   return (

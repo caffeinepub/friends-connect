@@ -1,148 +1,49 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Friends Connect App – Frontend Implementation",
+  "title": "Fix Internet Identity Authentication Flow",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Create Friends List screen displaying all friends with name and online/offline status as cards",
+      "id": "REQ-6",
+      "summary": "Fix the Internet Identity login flow to enable successful authentication, proper identity state management, and correct routing from AccessDeniedScreen to the authenticated app",
       "acceptanceCriteria": [
-        "Friends list is displayed with name and status badge",
-        "Empty state message shown when no friends are added",
-        "Friends data is persisted in the backend"
+        "Clicking the Internet Identity login button on the landing screen opens the Internet Identity authentication flow without errors.",
+        "After completing authentication, the user is redirected to the Friends List page (the default authenticated route).",
+        "The AuthGuard correctly detects the authenticated identity and does not keep showing the AccessDeniedScreen after login.",
+        "If the user is new, the ProfileSetupModal is shown to collect a display name after login completes.",
+        "Logging out from the user dropdown returns the user to the AccessDeniedScreen.",
+        "No console errors related to AuthClient, identity, or actor initialization appear during the login flow."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/FriendsListPage.tsx",
-          "operation": "create",
-          "description": "Create the Friends List page component that fetches and displays all friends from the backend using getFriendsList(). Display each friend as a card showing username and online/offline status indicator. Include an empty state message when no friends exist. Provide navigation to call and chat screens for each friend card. Display the default avatar placeholder image from frontend/public/assets/generated/avatar-placeholder.dim_128x128.png for each friend card since friends do not have custom avatars."
-        },
-        {
-          "path": "frontend/src/hooks/useFriends.ts",
-          "operation": "create",
-          "description": "Create custom hook to fetch friends list from backend using useQuery and the getFriendsList() method. Handle loading and error states. Return friends array and query status."
-        },
-        {
-          "path": "frontend/src/components/LoginButton.tsx",
-          "operation": "create",
-          "description": "Create LoginButton component using useInternetIdentity hook. Handle login/logout flow and clear query cache on logout as specified in the authorization component usage instructions."
-        },
-        {
-          "path": "frontend/src/components/ProfileSetupModal.tsx",
-          "operation": "create",
-          "description": "Create ProfileSetupModal component that prompts authenticated users without a profile to enter their name. Use getCallerUserProfile() to check for existing profile and saveCallerUserProfile() to save new profile. Follow the component's guidance to prevent modal flash by properly checking actor and query states."
-        },
-        {
-          "path": "frontend/src/hooks/useUserProfile.ts",
-          "operation": "create",
-          "description": "Create custom hook to fetch and manage caller user profile using getCallerUserProfile() and saveCallerUserProfile(). Implement the isLoading and isFetched logic as specified in the authorization component usage to prevent profile setup modal flash."
-        },
-        {
           "path": "frontend/src/components/AccessDeniedScreen.tsx",
-          "operation": "create",
-          "description": "Create AccessDeniedScreen component to display when unauthorized users attempt to access the app. Show a friendly message and login prompt."
+          "operation": "modify",
+          "description": "Update the login button handler to use the authorization component's login pattern with proper error handling. Ensure the button correctly calls the login function from useInternetIdentity and handles the 'User is already authenticated' error by clearing state and retrying. Add disabled state during the login process and display appropriate loading text. Verify the authorization component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Configure React Router with routes for FriendsListPage (default/home), FriendsManagementPage, CallPage (with friend param), and ChatPage (with friend param). Wrap routes with authentication guard that checks identity from useInternetIdentity and shows AccessDeniedScreen or ProfileSetupModal when appropriate. Include Layout component wrapping all authenticated routes."
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Implement Friends Management settings to add/remove friends by username",
-      "acceptanceCriteria": [
-        "User can add a friend by entering a username",
-        "User can remove a friend from the list",
-        "Changes are reflected immediately in the friends list",
-        "Backend stores and retrieves the friends list correctly"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/FriendsManagementPage.tsx",
-          "operation": "create",
-          "description": "Create Friends Management page with a form to add a friend by username using the addFriend(username) backend method, and a list showing all friends with remove buttons that call removeFriend(friendName). Use useMutation for add/remove operations and invalidate the friends list query on success to refresh the UI."
+          "description": "Review and fix the AuthGuard logic to properly detect authenticated identity state from the InternetIdentityProvider context. Ensure the guard correctly shows AccessDeniedScreen for unauthenticated users and allows authenticated users through to the main router. Fix any timing issues where the identity state might not be properly initialized before the guard renders. Add proper loading states to prevent flashing between authenticated and unauthenticated views."
         },
         {
-          "path": "frontend/src/hooks/useFriendMutations.ts",
-          "operation": "create",
-          "description": "Create custom hook providing useMutation wrappers for addFriend and removeFriend backend methods. Include optimistic updates and query invalidation for the friends list after mutations succeed. Handle error states and provide user feedback."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Add simulated voice/video Call screen with timer and control buttons",
-      "acceptanceCriteria": [
-        "Call screen shows friend name and an incrementing call timer",
-        "Mute, video toggle, and end call buttons are visible and interactive",
-        "Ending the call returns the user to the friends list",
-        "Call can be initiated from a friend's card"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/CallPage.tsx",
-          "operation": "create",
-          "description": "Create Call page component that receives friend username via route params. Display friend name, an incrementing call timer using setInterval, and interactive buttons for mute, video toggle, and end call. Simulate call state with local React state (muted, videoEnabled). End call button navigates back to friends list."
-        },
-        {
-          "path": "frontend/src/components/CallControls.tsx",
-          "operation": "create",
-          "description": "Create CallControls component with buttons for mute, video toggle, and end call. Accept callback props for each action. Style buttons with icons and clear labels following the vibrant theme."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Add simulated Chat/Messaging screen per friend with scrollable message bubbles",
-      "acceptanceCriteria": [
-        "Each friend has a dedicated chat thread",
-        "Messages are displayed as chat bubbles distinguishing sent vs received",
-        "New messages appear at the bottom and the list auto-scrolls",
-        "Messages persist in the backend"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/ChatPage.tsx",
-          "operation": "create",
-          "description": "Create Chat page component that receives friend username via route params. Fetch messages using getMessagesWithFriend(friendUsername) and display them as chat bubbles. Distinguish sent messages (current user) from received messages using sender principal comparison. Include a message input form that calls sendMessage(friendUsername, messageContent). Auto-scroll to bottom when new messages are added. Display the default avatar placeholder image from frontend/public/assets/generated/avatar-placeholder.dim_128x128.png next to received messages in the chat interface."
-        },
-        {
-          "path": "frontend/src/hooks/useMessages.ts",
-          "operation": "create",
-          "description": "Create custom hook to fetch messages for a specific friend using useQuery and getMessagesWithFriend(friendUsername). Provide a mutation for sending messages via sendMessage() that invalidates and refetches the messages query on success."
-        },
-        {
-          "path": "frontend/src/components/MessageBubble.tsx",
-          "operation": "create",
-          "description": "Create MessageBubble component that displays a single message with content, timestamp, and styling based on whether it is sent or received. Use chat bubble design with different alignments and colors for sent vs received messages."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Apply vibrant, modern visual theme with dark background, teal and coral accents, rounded cards, and smooth transitions",
-      "acceptanceCriteria": [
-        "All screens share a consistent color palette and typography",
-        "Cards and buttons use rounded corners and subtle shadows",
-        "Theme does not use blue or purple as primary accents"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/index.css",
+          "path": "frontend/src/components/ProfileSetupModal.tsx",
           "operation": "modify",
-          "description": "Update global styles to apply a dark background (e.g., #1a1a1a or #0f0f0f), define CSS custom properties for teal (#14b8a6 or similar) and coral (#ff6b6b or #ff7875) accent colors, and set a modern sans-serif font stack. Add base styles for smooth transitions on interactive elements."
+          "description": "Ensure the ProfileSetupModal follows the authorization component's pattern for preventing modal flash. Use the custom useGetCallerUserProfile hook pattern that properly handles actor dependency state (isLoading should reflect both actorFetching and query.isLoading). The modal should only appear when isAuthenticated && !profileLoading && isFetched && userProfile === null. Verify that profile data is properly invalidated and refetched after the Internet Identity login callback completes."
         },
         {
-          "path": "frontend/tailwind.config.js",
+          "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Extend Tailwind theme with custom colors for teal and coral accents, dark background shades, and configure rounded corners as defaults. Ensure transition utilities are available for smooth UI interactions."
+          "description": "Implement or update the useGetCallerUserProfile hook to match the authorization component's recommended pattern. Return custom state that includes actorFetching in isLoading and ensures isFetched only returns true when actor is available. Add queryKey ['currentUserProfile'] for proper cache management. Ensure the hook is enabled only when actor exists and is not fetching. This prevents premature profile setup modal display during the authentication flow."
         },
         {
           "path": "frontend/src/components/Layout.tsx",
-          "operation": "create",
-          "description": "Create Layout component that wraps all pages with consistent navigation, header, and footer. Apply the dark background and ensure the vibrant theme is visible throughout. Include navigation links to Friends List, Friends Management, and authentication controls. Import and display the app logo from frontend/public/assets/generated/logo.dim_256x256.png in the header/navigation area using appropriate sizing for the logo mark."
+          "operation": "modify",
+          "description": "Update the logout handler in the user dropdown to properly clear the identity state and all cached application data including the user profile, following the authorization component's logout pattern. Ensure the logout calls clear() from useInternetIdentity and queryClient.clear() to reset all React Query caches. Verify that after logout, the user is returned to the AccessDeniedScreen with no residual authenticated state."
+        },
+        {
+          "path": "frontend/src/utils/urlParams.ts",
+          "operation": "modify",
+          "description": "Review URL parameter handling for the Internet Identity callback flow. Ensure that authentication callback parameters are properly extracted from both standard query strings and hash-based routes, persisted to sessionStorage if needed for the login flow, and cleaned from the URL after processing. Fix any issues where callback parameters might not be accessible to the AuthClient, preventing successful login completion."
         }
       ]
     }

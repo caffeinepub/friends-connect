@@ -1,13 +1,14 @@
 # Specification
 
 ## Summary
-**Goal:** Build a Friends Connect app with friends management, simulated calling, and chat messaging, styled with a vibrant dark theme using teal and coral accents.
+**Goal:** Fix the Internet Identity authentication flow so users can successfully log in via the login button on the AccessDeniedScreen.
 
 **Planned changes:**
-- Friends List screen showing friend cards with name and online/offline status badge, with an empty state when no friends exist
-- Friends Management: add a friend by username, remove a friend, with all data persisted in the backend
-- Simulated Call screen initiated from a friend's card, showing friend name, incrementing call timer, and mute/video toggle/end call buttons
-- Chat screen per friend with scrollable chat bubble layout (sent vs. received), text input, and messages persisted in the backend
-- Consistent dark background theme with teal and coral accents, rounded cards, subtle shadows, and smooth transitions across all screens
+- Diagnose and fix the AuthClient login callback so it correctly completes the authentication flow
+- Ensure the InternetIdentityProvider context updates the identity state after a successful login
+- Fix the AuthGuard to correctly detect the authenticated identity and redirect users to the Friends List page instead of keeping them on the AccessDeniedScreen
+- Show the ProfileSetupModal for new users after login completes
+- Ensure logging out returns the user to the AccessDeniedScreen
+- Eliminate console errors related to AuthClient, identity, or actor initialization during the login flow
 
-**User-visible outcome:** Users can manage a friends list, initiate a simulated voice/video call, and exchange persistent text messages with each friend, all within a cohesive dark-themed UI.
+**User-visible outcome:** Users can click the Internet Identity login button, complete authentication, and be redirected into the app. New users see the profile setup modal. Logging out returns them to the landing screen.

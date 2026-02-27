@@ -2,8 +2,7 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetCallerUserProfile } from '../hooks/useQueries';
-import { Users, MessageSquare, Phone, Settings, LogOut, Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Users, Settings, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -26,8 +25,11 @@ export default function Layout({ children }: LayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
-    await clear();
+    // Clear all cached application data first
     queryClient.clear();
+    // Then clear the identity
+    await clear();
+    // Navigate to root — AuthGuard will show AccessDeniedScreen
     navigate({ to: '/' });
   };
 
@@ -52,7 +54,7 @@ export default function Layout({ children }: LayoutProps) {
               alt="Friends Connect"
               className="w-8 h-8 rounded-lg object-cover"
             />
-            <span className="font-display font-700 text-lg tracking-tight text-foreground group-hover:text-teal transition-colors">
+            <span className="font-display font-bold text-lg tracking-tight text-foreground group-hover:text-teal transition-colors">
               Friends<span className="text-teal">Connect</span>
             </span>
           </Link>
@@ -125,27 +127,38 @@ export default function Layout({ children }: LayoutProps) {
             <button
               className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
 
         {/* Mobile Nav */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-border bg-card px-4 py-3 flex flex-col gap-1">
-            {navLinks.map(({ to, label, icon: Icon }) => (
-              <Link
-                key={to}
-                to={to}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
-                activeProps={{ className: 'text-teal bg-teal/10 hover:bg-teal/15 hover:text-teal' }}
-              >
-                <Icon className="w-4 h-4" />
-                {label}
-              </Link>
-            ))}
+          <div className="md:hidden border-t border-border bg-card/95 backdrop-blur-sm">
+            <nav className="max-w-5xl mx-auto px-4 py-3 flex flex-col gap-1">
+              {navLinks.map(({ to, label, icon: Icon }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+                  activeProps={{ className: 'text-teal bg-teal/10 hover:text-teal' }}
+                >
+                  <Icon className="w-4 h-4" />
+                  {label}
+                </Link>
+              ))}
+            </nav>
           </div>
         )}
       </header>
@@ -156,25 +169,18 @@ export default function Layout({ children }: LayoutProps) {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-card py-6 mt-auto">
-        <div className="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1.5">
-            <span className="font-display font-semibold text-foreground">FriendsConnect</span>
-            <span>© {new Date().getFullYear()}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            Built with{' '}
-            <span className="text-coral mx-1">♥</span>
-            {' '}using{' '}
-            <a
-              href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname || 'friends-connect')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-teal hover:underline font-medium"
-            >
-              caffeine.ai
-            </a>
-          </div>
+      <footer className="border-t border-border py-5 mt-auto">
+        <div className="max-w-5xl mx-auto px-4 text-center text-sm text-muted-foreground">
+          © {new Date().getFullYear()} FriendsConnect · Built with{' '}
+          <span className="text-coral">♥</span> using{' '}
+          <a
+            href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname || 'friends-connect')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-teal hover:underline font-medium"
+          >
+            caffeine.ai
+          </a>
         </div>
       </footer>
     </div>

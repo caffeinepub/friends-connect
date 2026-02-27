@@ -1,10 +1,10 @@
 {
   "frontend/src/index.css": "Global styles with OKLCH color system featuring a dark-friendly teal/coral accent palette, Space Grotesk + Inter fonts, and utility classes for gradients, glass effects, and themed shadows.",
   "frontend/tailwind.config.js": "Extended Tailwind config with custom teal/coral color tokens, display font family, additional border-radius and shadow scales, and custom keyframe animations.",
-  "frontend/src/App.tsx": "Main app entry with TanStack Router setup, route definitions for home/friends/call/chat pages, and an AuthGuard wrapper that handles login state, profile setup modal, and loading screens.",
+  "frontend/src/App.tsx": "Main app entry with TanStack Router setup, route definitions, and an AuthGuard that shows a loading spinner during both isInitializing and isLoggingIn states, preventing the AccessDeniedScreen from flashing during the login flow.",
   "frontend/src/hooks/useQueries.ts": "All React Query hooks for backend operations — user profile (get/save), friends list (get/add/remove), and messages (get/send) with proper query invalidation.",
-  "frontend/src/components/Layout.tsx": "App shell with sticky header (logo, nav links, user dropdown), main content outlet, and footer with caffeine.ai attribution and dynamic year.",
-  "frontend/src/components/AccessDeniedScreen.tsx": "Full-page login landing screen shown to unauthenticated users, featuring app branding, feature highlights, and an Internet Identity login button.",
+  "frontend/src/components/Layout.tsx": "App shell with sticky header, nav links, user dropdown, mobile menu, and footer; logout handler now clears React Query cache before calling clear() to ensure all cached application data is wiped on logout.",
+  "frontend/src/components/AccessDeniedScreen.tsx": "Full-page login landing screen for unauthenticated users; now includes a useEffect that detects the \"User is already authenticated\" error and automatically calls clear() then retries login after 500ms, with proper disabled/loading states and a visible error message for other login failures.",
   "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog that prompts newly authenticated users (without a profile) to enter their display name before accessing the app.",
   "frontend/src/pages/FriendsListPage.tsx": "Friends list page displaying friend cards with teal initials avatar, online/offline status badge, and Chat/Call action buttons; removed the conflicting `hidden flex` classes by replacing the broken image fallback pattern with a pure CSS initials avatar.",
   "frontend/src/pages/FriendsManagementPage.tsx": "Friends management page with add-friend form, searchable list, and remove confirmation dialogs; replaced deprecated `flex-shrink-0` with `shrink-0`.",

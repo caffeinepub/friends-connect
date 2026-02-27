@@ -1,9 +1,49 @@
+import { useEffect, useRef } from 'react';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
 import { Button } from '@/components/ui/button';
-import { Users, Lock, Loader2 } from 'lucide-react';
+import { Users, Lock, Loader2, AlertCircle } from 'lucide-react';
 
 export default function AccessDeniedScreen() {
-  const { login, isLoggingIn, isInitializing } = useInternetIdentity();
+  const { login, clear, isLoggingIn, isInitializing, isLoginError, loginError } = useInternetIdentity();
+  const retryingRef = useRef(false);
+
+  // Handle the "User is already authenticated" error by clearing state and retrying
+  useEffect(() => {
+    if (
+      isLoginError &&
+      loginError?.message === 'User is already authenticated' &&
+      !retryingRef.current
+    ) {
+      retryingRef.current = true;
+      void (async () => {
+        try {
+          await clear();
+          // Wait for the auth client to re-initialize before retrying
+          setTimeout(() => {
+            retryingRef.current = false;
+            login();
+          }, 500);
+        } catch {
+          retryingRef.current = false;
+        }
+      })();
+    }
+  }, [isLoginError, loginError, clear, login]);
+
+  const handleLogin = () => {
+    retryingRef.current = false;
+    login();
+  };
+
+  const isRetrying =
+    retryingRef.current ||
+    (isLoginError && loginError?.message === 'User is already authenticated');
+
+  const isDisabled = isLoggingIn || isInitializing || isRetrying;
+
+  const showError =
+    isLoginError &&
+    loginError?.message !== 'User is already authenticated';
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -53,17 +93,30 @@ export default function AccessDeniedScreen() {
             ))}
           </div>
 
+          {/* Error message */}
+          {showError && (
+            <div className="flex items-center gap-2 text-destructive bg-destructive/10 border border-destructive/20 rounded-xl px-4 py-3 mb-4 text-sm">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>Login failed. Please try again.</span>
+            </div>
+          )}
+
           {/* Login Button */}
           <Button
-            onClick={login}
-            disabled={isLoggingIn || isInitializing}
+            onClick={handleLogin}
+            disabled={isDisabled}
             size="lg"
             className="w-full bg-teal hover:bg-teal-dark text-white font-semibold rounded-2xl h-12 shadow-teal transition-all hover:shadow-lg"
           >
-            {isLoggingIn ? (
+            {isLoggingIn || isRetrying ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                 Connecting...
+              </>
+            ) : isInitializing ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Initializing...
               </>
             ) : (
               <>
