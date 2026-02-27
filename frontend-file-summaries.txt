@@ -1,0 +1,15 @@
+{
+  "frontend/src/index.css": "Global styles with OKLCH color system featuring a dark-friendly teal/coral accent palette, Space Grotesk + Inter fonts, and utility classes for gradients, glass effects, and themed shadows.",
+  "frontend/tailwind.config.js": "Extended Tailwind config with custom teal/coral color tokens, display font family, additional border-radius and shadow scales, and custom keyframe animations.",
+  "frontend/src/App.tsx": "Main app entry with TanStack Router setup, route definitions for home/friends/call/chat pages, and an AuthGuard wrapper that handles login state, profile setup modal, and loading screens.",
+  "frontend/src/hooks/useQueries.ts": "All React Query hooks for backend operations — user profile (get/save), friends list (get/add/remove), and messages (get/send) with proper query invalidation.",
+  "frontend/src/components/Layout.tsx": "App shell with sticky header (logo, nav links, user dropdown), main content outlet, and footer with caffeine.ai attribution and dynamic year.",
+  "frontend/src/components/AccessDeniedScreen.tsx": "Full-page login landing screen shown to unauthenticated users, featuring app branding, feature highlights, and an Internet Identity login button.",
+  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog that prompts newly authenticated users (without a profile) to enter their display name before accessing the app.",
+  "frontend/src/pages/FriendsListPage.tsx": "Friends list page displaying friend cards with teal initials avatar, online/offline status badge, and Chat/Call action buttons; removed the conflicting `hidden flex` classes by replacing the broken image fallback pattern with a pure CSS initials avatar.",
+  "frontend/src/pages/FriendsManagementPage.tsx": "Friends management page with add-friend form, searchable list, and remove confirmation dialogs; replaced deprecated `flex-shrink-0` with `shrink-0`.",
+  "frontend/src/pages/CallPage.tsx": "Simulated call screen showing friend avatar, live call timer, mute/video status indicators, and call controls; navigates back to home on end call.",
+  "frontend/src/components/CallControls.tsx": "Reusable call control bar with mute, video toggle, and end-call buttons styled with teal/coral accents and tooltips.",
+  "frontend/src/pages/ChatPage.tsx": "Per-friend chat page with scrollable message bubbles, auto-scroll, Enter-to-send textarea, and a call shortcut; replaced deprecated `flex-shrink-0` with `shrink-0`.",
+  "frontend/src/components/MessageBubble.tsx": "Individual chat message bubble with sent/received styling, hover-revealed timestamp, and sender initials avatar; replaced deprecated `flex-shrink-0` with `shrink-0`."
+}

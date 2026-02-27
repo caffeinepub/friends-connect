@@ -1,0 +1,107 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-friends-list-screen-where-users-can-view-all-their-added-friends-displayed-as-cards-with-name-and-online-offline-status-indicator",
+      "featureTitle": "Create a Friends List screen where users can view all their added friends, displayed as cards with name and online/offline status indicator.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AccessDeniedScreen.tsx",
+        "frontend/src/components/ProfileSetupModal.tsx",
+        "frontend/src/pages/FriendsListPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-friends-management-settings-that-allow-users-to-add-a-new-friend-by-username-remove-an-existing-friend-and-view-a-list-of-all-friends-all-friend-data-must-be-stored-in-the-backend",
+      "featureTitle": "Implement Friends Management settings that allow users to add a new friend by username, remove an existing friend, and view a list of all friends. All friend data must be stored in the backend.",
+      "files": [
+        "frontend/src/pages/FriendsManagementPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-simulated-voice-video-call-screen-that-users-can-initiate-from-a-friend-s-profile-the-screen-should-display-the-friend-s-name-a-call-timer-and-buttons-to-mute-toggle-video-and-end-the-call-since-real-time-calling-is-not-supported-the-ui-should-simulate-an-active-call-state",
+      "featureTitle": "Add a simulated voice/video Call screen that users can initiate from a friend's profile. The screen should display the friend's name, a call timer, and buttons to mute, toggle video, and end the call. Since real-time calling is not supported, the UI should simulate an active call state.",
+      "files": [
+        "frontend/src/components/CallControls.tsx",
+        "frontend/src/pages/CallPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-simulated-chat-messaging-screen-per-friend-where-the-user-can-type-and-send-text-messages-messages-should-be-stored-in-the-backend-per-friend-conversation-and-displayed-in-a-scrollable-chat-bubble-layout",
+      "featureTitle": "Add a simulated Chat/Messaging screen per friend where the user can type and send text messages. Messages should be stored in the backend per friend conversation and displayed in a scrollable chat bubble layout.",
+      "files": [
+        "frontend/src/components/MessageBubble.tsx",
+        "frontend/src/pages/ChatPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-vibrant-modern-visual-theme-with-a-dark-background-vivid-accent-colors-e-g-teal-and-coral-rounded-cards-smooth-transitions-and-clear-typography-enforce-the-theme-consistently-across-all-screens",
+      "featureTitle": "Apply a vibrant, modern visual theme with a dark background, vivid accent colors (e.g., teal and coral), rounded cards, smooth transitions, and clear typography. Enforce the theme consistently across all screens.",
+      "files": [
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

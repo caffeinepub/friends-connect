@@ -1,0 +1,116 @@
+{
+  "kind": "build_request",
+  "title": "Friends Connect App – Call, Chat & Friends Management",
+  "projectName": "Friends Connect",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a Friends List screen where users can view all their added friends, displayed as cards with name and online/offline status indicator.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "a friends setting"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Friends list is displayed with name and status badge",
+        "Empty state message shown when no friends are added",
+        "Friends data is persisted in the backend"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement Friends Management settings that allow users to add a new friend by username, remove an existing friend, and view a list of all friends. All friend data must be stored in the backend.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "friends setting"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can add a friend by entering a username",
+        "User can remove a friend from the list",
+        "Changes are reflected immediately in the friends list",
+        "Backend stores and retrieves the friends list correctly"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add a simulated voice/video Call screen that users can initiate from a friend's profile. The screen should display the friend's name, a call timer, and buttons to mute, toggle video, and end the call. Since real-time calling is not supported, the UI should simulate an active call state.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "cut and call my friends"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Call screen shows friend name and an incrementing call timer",
+        "Mute, video toggle, and end call buttons are visible and interactive",
+        "Ending the call returns the user to the friends list",
+        "Call can be initiated from a friend's card"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add a simulated Chat/Messaging screen per friend where the user can type and send text messages. Messages should be stored in the backend per friend conversation and displayed in a scrollable chat bubble layout.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "cut and call my friends"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each friend has a dedicated chat thread",
+        "Messages are displayed as chat bubbles distinguishing sent vs received",
+        "New messages appear at the bottom and the list auto-scrolls",
+        "Messages persist in the backend"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Apply a vibrant, modern visual theme with a dark background, vivid accent colors (e.g., teal and coral), rounded cards, smooth transitions, and clear typography. Enforce the theme consistently across all screens.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All screens share a consistent color palette and typography",
+        "Cards and buttons use rounded corners and subtle shadows",
+        "Theme does not use blue or purple as primary accents"
+      ]
+    }
+  ],
+  "constraints": [
+    "No real-time WebSocket or live calling infrastructure — call and chat features must be simulated or use polling/stored state",
+    "All data persistence must use the Motoko backend actor",
+    "Do not edit any files under frontend/src/hooks/ or frontend/src/components/ui"
+  ],
+  "nonGoals": [
+    "Real-time voice or video calling via WebRTC or any external service",
+    "Push notifications or SMS",
+    "Third-party authentication (only Internet Identity if auth is needed)",
+    "External database or cloud storage"
+  ],
+  "imageRequirements": {
+    "required": [
+      "App logo mark — a stylized speech bubble merged with a phone handset icon in teal and coral on a dark background (logo.dim_256x256.png)",
+      "Default avatar placeholder illustration — a friendly abstract person silhouette with teal accent colors (avatar-placeholder.dim_128x128.png)"
+    ],
+    "edits": []
+  }
+}

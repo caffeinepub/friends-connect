@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "A social app that allows users to make calls and chat with friends, with a friends management/settings feature.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- App logo mark — a stylized speech bubble merged with a phone handset icon in teal and coral on a dark background (logo.dim_256x256.png)\n- Default avatar placeholder illustration — a friendly abstract person silhouette with teal accent colors (avatar-placeholder.dim_128x128.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-friends-list-screen-where-users-can-view-all-their-added-friends-displayed-as-cards-with-name-and-online-offline-status-indicator",
+      "title": "Create a Friends List screen where users can view all their added friends, displayed as cards with name and online/offline status indicator.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-friends-management-settings-that-allow-users-to-add-a-new-friend-by-username-remove-an-existing-friend-and-view-a-list-of-all-friends-all-friend-data-must-be-stored-in-the-backend",
+      "title": "Implement Friends Management settings that allow users to add a new friend by username, remove an existing friend, and view a list of all friends. All friend data must be stored in the backend.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-simulated-voice-video-call-screen-that-users-can-initiate-from-a-friend-s-profile-the-screen-should-display-the-friend-s-name-a-call-timer-and-buttons-to-mute-toggle-video-and-end-the-call-since-real-time-calling-is-not-supported-the-ui-should-simulate-an-active-call-state",
+      "title": "Add a simulated voice/video Call screen that users can initiate from a friend's profile. The screen should display the friend's name, a call timer, and buttons to mute, toggle video, and end the call. Since real-time calling is not supported, the UI should simulate an active call state.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-simulated-chat-messaging-screen-per-friend-where-the-user-can-type-and-send-text-messages-messages-should-be-stored-in-the-backend-per-friend-conversation-and-displayed-in-a-scrollable-chat-bubble-layout",
+      "title": "Add a simulated Chat/Messaging screen per friend where the user can type and send text messages. Messages should be stored in the backend per friend conversation and displayed in a scrollable chat bubble layout.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-vibrant-modern-visual-theme-with-a-dark-background-vivid-accent-colors-e-g-teal-and-coral-rounded-cards-smooth-transitions-and-clear-typography-enforce-the-theme-consistently-across-all-screens",
+      "title": "Apply a vibrant, modern visual theme with a dark background, vivid accent colors (e.g., teal and coral), rounded cards, smooth transitions, and clear typography. Enforce the theme consistently across all screens.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Voice/video calling feature to call friends",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Chat/messaging feature to text friends",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Friends management settings (add, remove, manage friends)",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Friends Connect",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
